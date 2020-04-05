@@ -1,0 +1,44 @@
+/*
+Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
+*/
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    
+    public ArrayList<Integer> leftnodes = new ArrayList<Integer>();
+    public ArrayList<Integer> rightnodes = new ArrayList<Integer>();
+    
+    public boolean isSymmetric(TreeNode root) {
+        if(root == null)
+            return true;
+        preorder(root.left);
+        postorder(root.right);
+        return leftnodes.equals(rightnodes);       
+    }
+    public void preorder(TreeNode node){
+        if(node==null)
+            leftnodes.add(null);
+        else{
+            preorder(node.left);
+            preorder(node.right);
+            leftnodes.add(node.val);
+        }        
+    }
+    public void postorder(TreeNode node){
+        if(node==null)
+            rightnodes.add(null);
+        else{
+            postorder(node.right);
+            postorder(node.left);        
+            rightnodes.add(node.val);
+        }      
+    }
+}
