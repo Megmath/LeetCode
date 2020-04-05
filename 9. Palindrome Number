@@ -1,0 +1,24 @@
+/*
+Determine whether an integer is a palindrome. An integer is a palindrome when it reads the same backward as forward.
+*/
+
+class Solution {
+    public boolean isPalindrome(int x) {
+        ArrayList arr = new ArrayList();
+        if(x<0)
+            return false;
+
+        while(x>0){
+            arr.add(x%10);
+            x = x/10;
+        }
+
+        for(int i=0, j=arr.size()-1; i< arr.size()/2; i++, j--){
+            if(arr.get(i) != arr.get(j)) {
+                return false;
+            }
+        }
+        return true;
+        
+    }
+}
