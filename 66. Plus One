@@ -1,0 +1,36 @@
+/*
+Given a non-empty array of digits representing a non-negative integer, plus one to the integer.
+The digits are stored such that the most significant digit is at the head of the list, and each element in the array contain a single digit.
+You may assume the integer does not contain any leading zero, except the number 0 itself.
+*/
+
+class Solution {
+    public int[] plusOne(int[] digits) {
+        int carry = 1;
+        int [] a;
+        int count;
+        int n = digits.length-1;
+        int sum;
+        if(digits[n]==9 && digits[0]==9){
+            a = new int[digits.length+1];
+            a[0] = 1;
+        }
+        else
+            a = new int[digits.length];
+        count = a.length - 1;        
+        for(int i=n; i>=0; i--){            
+            sum = digits[i]+carry;
+            if(sum<10){
+                carry = 0;
+                a[count] = sum;
+                count--;
+            }
+            else{
+                carry = 1;
+                a[count] = sum%10;
+                count--;
+            }
+        }
+        return a;
+    }
+}
