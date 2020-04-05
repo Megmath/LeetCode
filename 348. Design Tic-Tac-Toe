@@ -1,0 +1,92 @@
+/*
+Design a Tic-tac-toe game that is played between two players on a n x n grid.
+
+You may assume the following rules:
+
+A move is guaranteed to be valid and is placed on an empty block.
+Once a winning condition is reached, no more moves is allowed.
+A player who succeeds in placing n of their marks in a horizontal, vertical, or diagonal row wins the game.
+*/
+
+class TicTacToe {
+
+    int[][] grid;
+    char symbol;
+    int n=0;
+    /** Initialize your data structure here. */
+    public TicTacToe(int n) {
+        grid = new int[n][n];
+        this.n=n;
+    }
+    
+    /** Player {player} makes a move at ({row}, {col}).
+        @param row The row of the board.
+        @param col The column of the board.
+        @param player The player, can be either 1 or 2.
+        @return The current winning condition, can be either:
+                0: No one wins.
+                1: Player 1 wins.
+                2: Player 2 wins. */
+    public int move(int row, int col, int player) {
+        if(player==1){
+            symbol = 'X';
+            grid[row][col]=symbol;
+        }                    
+        else if(player==2){
+            symbol = 'O';
+            grid[row][col]=symbol;
+        }   
+        int k = check(row, col, symbol);
+        if(player==1 && k==1)
+            return 1;
+        if(player==2 && k==1)
+            return 2;
+        else return 0;
+    }
+    
+    public int check(int row, int col, char symbol) {
+        int count=0;
+        for(int i=0; i<n; i++){
+            if(grid[row][i]==symbol){
+                count++;
+                if(count==n)
+                    return 1;
+            }                
+            else break;
+        }
+        count=0;
+        for(int i=0; i<n; i++){
+            if(grid[i][col]==symbol){
+                count++;
+                if(count==n)
+                    return 1;
+            }                
+            else break;
+        }
+        count=0;
+        for(int i=0;i<n;i++){
+            if(grid[i][i]==symbol){
+                count++;
+                if(count==n)
+                    return 1;
+            }                
+            else break;
+        }
+        count=0;
+        for(int i=0,j=n-1;i<n;i++,j--){
+            if(grid[i][j]==symbol){
+                count++;
+                if(count==n)
+                    return 1;
+            }                
+            else break;
+        }
+        return 0;        
+    }
+}
+
+/**
+ * Your TicTacToe object will be instantiated and called as such:
+ * TicTacToe obj = new TicTacToe(n);
+ * int param_1 = obj.move(row,col,player);
+ */
