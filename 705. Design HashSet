@@ -1,0 +1,78 @@
+/*
+Design a HashSet without using any built-in hash table libraries.
+
+To be specific, your design should include these functions:
+
+add(value): Insert a value into the HashSet. 
+contains(value) : Return whether the value exists in the HashSet or not.
+remove(value): Remove a value in the HashSet. If the value does not exist in the HashSet, do nothing.
+*/
+
+class MyHashSet {
+
+    ListNode[] list = new ListNode[10000]; 
+    
+    /** Initialize your data structure here. */
+    public MyHashSet() {
+        
+    }
+    
+    public void add(int key) {
+        int index = hashkey(key);
+        ListNode prev = findElement(index, key);
+        if(prev==null){
+            ListNode temp = new ListNode(-1);
+            list[index]=temp;
+            temp.next = new ListNode(key);
+        }
+        else if(prev.next==null)
+            prev.next = new ListNode(key);
+    }
+    
+    public void remove(int key) {
+        int index = hashkey(key);
+        ListNode prev = findElement(index, key);
+        if(prev!=null && prev.next!=null)
+            prev.next = prev.next.next;
+    }
+    
+    /** Returns true if this set contains the specified element */
+    public boolean contains(int key) {
+        int index = hashkey(key);
+        ListNode prev = findElement(index, key);
+        if(prev==null)
+            return false;
+        if(prev.next==null)
+            return false;
+        return true;
+    }
+    
+    public int hashkey(int key){
+        return key%list.length;
+    }
+    
+    public ListNode findElement(int index, int key){
+        if(list[index]==null)
+            return null;
+        ListNode prev = list[index];
+        while(prev.next!=null && prev.next.val!=key)
+                prev = prev.next;  
+        return prev;
+    }
+}
+
+class ListNode{
+    int val;
+    ListNode next;
+    public ListNode(int val){
+        this.val = val;
+    }        
+}
+
+/**
+ * Your MyHashSet object will be instantiated and called as such:
+ * MyHashSet obj = new MyHashSet();
+ * obj.add(key);
+ * obj.remove(key);
+ * boolean param_3 = obj.contains(key);
+ */
